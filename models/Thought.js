@@ -1,5 +1,6 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
+
 
 // Reaction schema will be imbeded in thought model like ( reply was is comment model)
 const ReactionSchema = new Schema(
