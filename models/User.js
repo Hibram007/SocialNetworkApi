@@ -4,13 +4,13 @@ const dateFormat = require('../utils/dateFormat');
 const UserSchema = new Schema(
     {
         userName: {
-            type: string,
+            type: String,
             required: true,
             trim: true,
             unique: true
         },
         email: {
-            type: string,
+            type: String,
             unique: true,
             required: [true, 'Must be a valid email address'],
             // look at regex docs for email validation - M.17 challenge is exactly this
@@ -51,7 +51,7 @@ UserSchema.virtual('friendCount').get(function() {
     //.reduce() method tallys up the total of every comment with its replies
     return this.friends.length
   })
-  
+
   
   const User = model('User', UserSchema);
   
