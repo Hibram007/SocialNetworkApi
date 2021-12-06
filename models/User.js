@@ -11,18 +11,22 @@ const UserSchema = new Schema(
         },
         email: {
             type: string,
+            unique: true,
             required: [true, 'Must be a valid email address'],
-            trim: true,
-            unique: true
+            // look at regex docs for email validation - M.17 challenge is exactly this
+            validate: {
+                validator(validEmail) {
+                  return /^([a-zA-Z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})(\.[a-z]{2,6})?$/.test(
+                    validEmail
+                  );
+                },
+              },
         },
         thoughts: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Thought'
-            }
-        ]
-    },
-    {
+            }],
         friends: [
         {
             type: Schema.Types.ObjectId,
@@ -45,8 +49,9 @@ const UserSchema = new Schema(
 // get total count of friends and on retrieval
 UserSchema.virtual('friendCount').get(function() {
     //.reduce() method tallys up the total of every comment with its replies
-    return this.friends.reduce((total, comment) => total + comment.replies.length + 1, 0);
-  });
+    return this.friends.length
+  })
+  
   
   const User = model('User', UserSchema);
   
